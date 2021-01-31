@@ -20,6 +20,13 @@ namespace Bug_Tracker_Backend.Model
             optionsBuilder.UseSqlServer(@"Server=LAPTOP-J7R2IVQD\SQLEXPRESS;
                                         Database=Bug_Tracker;Trusted_Connection=True;");
         }
+
+        //ADDED FOR EFCORE TO WORK
+        public DBContext(DbContextOptions<DBContext> options)
+       : base(options)
+        {
+        }
+
     }
 }
 
