@@ -25,21 +25,30 @@ namespace Bug_Tracker_Backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Ticket>>> GetTickets()
         {
-            return await _context.Tickets.ToListAsync();
+            var list = await _context.Tickets
+               .Include(b => b.Developer)
+               .Include(c => c.Application)
+               .ToListAsync();
+            return list;
         }
 
         // GET: api/Tickets/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ticket>> GetTicket(int id)
+        public async Task<ActionResult<IEnumerable<Ticket>>> GetTicket(int id)
         {
-            var ticket = await _context.Tickets.FindAsync(id);
+            var list = await _context.Tickets.Where(a => a.TicketID == id)
+                .Include(b => b.Developer)
+                .Include(c => c.Application)
+                .ToListAsync();
+            
+            //var ticket = await _context.Tickets.FindAsync(id);
 
-            if (ticket == null)
+            if (list == null)
             {
                 return NotFound();
             }
 
-            return ticket;
+            return list;
         }
 
         // PUT: api/Tickets/5

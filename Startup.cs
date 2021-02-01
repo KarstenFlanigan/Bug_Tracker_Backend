@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Bug_Tracker_Backend.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace Bug_Tracker_Backend
 {
@@ -27,7 +28,9 @@ namespace Bug_Tracker_Backend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            //Added alongside Newtonsoft MVC Package because of error
+            services.AddControllers().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             //ADDED FOR EF CORE TO WORK
             services.AddDbContext<Bug_Tracker_Backend.Model.DBContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -48,11 +51,6 @@ namespace Bug_Tracker_Backend
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-               /*
-                endpoints.MapControllerRoute(
-                  name: "default",
-                  pattern: "{controller=Home}/{action=Index}/{id?}");
-                  */
             });
         }
     }
