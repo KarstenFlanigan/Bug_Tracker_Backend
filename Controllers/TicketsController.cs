@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Bug_Tracker_Backend;
 using Bug_Tracker_Backend.Model;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Cryptography.X509Certificates;
+using Bug_Tracker_Backend.Migrations;
 
 namespace Bug_Tracker_Backend.Controllers
 {
@@ -36,33 +39,36 @@ namespace Bug_Tracker_Backend.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Ticket>>> GetTicket(int id)
         {
-            var list = await _context.Tickets.Where(a => a.TicketID == id)
-                .Include(b => b.Developer)
-                .Include(c => c.Application)
-                .ToListAsync();
-            
-            //var ticket = await _context.Tickets.FindAsync(id);
+            /*
+            var application = await _context.Applications.FindAsync(id);
+            var developer = await _context.Developers.FindAsync(id);
+            */
+            var ticket = await _context.Tickets.Where(t => t.TicketID == id)
+             .Include(b => b.Developer)
+             .Include(c => c.Application)
+             .ToListAsync();
 
-            if (list == null)
+            if (ticket == null)
             {
                 return NotFound();
             }
 
-            return list;
+            return ticket;
         }
 
         // PUT: api/Tickets/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTicket(int id, Ticket ticket)
+        public async Task<IActionResult> PutTicket(int id, Ticket updatedTicket)
         {
-            if (id != ticket.TicketID)
+
+            if (id != updatedTicket.TicketID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(ticket).State = EntityState.Modified;
+            _context.Entry(updatedTicket).State = EntityState.Modified;
 
             try
             {
@@ -80,7 +86,7 @@ namespace Bug_Tracker_Backend.Controllers
                 }
             }
 
-            return NoContent();
+            return StatusCode(200);
         }
 
         // POST: api/Tickets

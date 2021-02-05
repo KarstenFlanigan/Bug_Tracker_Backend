@@ -17,15 +17,16 @@ namespace Bug_Tracker_Backend
         public DateTime DateCreated { get; set; }
 
         public DateTime DateDue { get; set; }
+        public string UserName { get; set; }
 
         //1 to Relationship with Application
         public int ApplicationID { get; set; }
-        public Application Application { get; set; }
 
         //1 to Relationship with Developer
         public int DeveloperID { get; set; }
         public Developer Developer { get; set; }
-      
-        public string UserName { get; set; }
+        public Application Application { get; set; }
+
+
     }
 }
