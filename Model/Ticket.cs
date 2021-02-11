@@ -19,6 +19,8 @@ namespace Bug_Tracker_Backend
         public DateTime DateDue { get; set; }
         public string UserName { get; set; }
 
+        public string Status { get; set; }
+
         //1 to Relationship with Application
         public int ApplicationID { get; set; }
 
