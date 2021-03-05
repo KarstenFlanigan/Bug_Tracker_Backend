@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using System.IO;
 
@@ -19,7 +18,7 @@ namespace Bug_Tracker_Backend.Model
         //add-migration School
         //Update-database
         //update-database -verbose
-        
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

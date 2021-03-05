@@ -9,7 +9,7 @@ using Bug_Tracker_Backend;
 using Bug_Tracker_Backend.Model;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Cryptography.X509Certificates;
-using Bug_Tracker_Backend.Migrations;
+//using Bug_Tracker_Backend.Migrations;
 
 namespace Bug_Tracker_Backend.Controllers
 {
@@ -86,7 +86,7 @@ namespace Bug_Tracker_Backend.Controllers
                 }
             }
 
-            return StatusCode(200);
+            return Ok("Success");
         }
 
         // POST: api/Tickets
